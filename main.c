@@ -36,43 +36,36 @@ void msp430_init();
 
 unsigned char into_fired = 0;
 
-const unsigned char RF430_DEFAULT_DATA[]	=	{  												\
-		/* NDEF Tag Application Name */ 															\
-		0xD2, 0x76, 0x00, 0x00, 0x85, 0x01, 0x01, 												\
-																								\
-		/* Capability Container ID */ 															\
-		0xE1, 0x03, 																			\
-		0x00, 0x0F,	/* CCLEN */																	\
-		0x20,		/* Mapping version 2.0 */													\
-		0x00, 0x3B,	/* MLe (49 bytes); Maximum R-APDU data size */								\
-		0x00, 0x34, /* MLc (52 bytes); Maximum C-APDU data size */								\
-		0x04, 		/* Tag, File Control TLV (4 = NDEF file) */									\
-		0x06, 		/* Length, File Control TLV (6 = 6 bytes of data for this tag) */			\
-		0xE1, 0x04,	/* File Identifier */														\
-		0x0B, 0xDF, /* Max NDEF size (3037 bytes of useable memory) */							\
-		0x00, 		/* NDEF file read access condition, read access without any security */		\
-		0x00, 		/* NDEF file write access condition; write access without any security */	\
-																								\
-		/* NDEF File ID */ 																		\
-		0xE1, 0x04, 																			\
-																								\
-		/* NDEF File for Hello World  (48 bytes total length) */								\
-		0x00, 0x2A, /* 0x39 NLEN; NDEF length (3 byte long message) */ 							\
-		0xD1, 0x01, 0x26,  /* This last byte has to be changed to NLEN - 4 	*/					\
-		0x54, /* T = text */																	\
-		0x02, 																					\
-		0x65, 0x6E, /* 'e', 'n', */																\
-																								\
-		/* Essentially the temperature information below gets sent to the NFC device */																	\
-		/* 'Temperature: '*/																	\
-		0x54, 0x65, 0x6d, 0x70, 0x65, 0x72, 0x61, 0x74, 0x75, 0x72, 0x65, 0x3a, 0x20, 			\
-		/* '80 F' */																			\
-		0x38, 0x30, 0x46, 0x0A,					 												\
-		/* 'Temperature: ' */																	\
-		0x54, 0x65, 0x6d, 0x70, 0x65, 0x72, 0x61, 0x74, 0x75, 0x72, 0x65, 0x3a, 0x20, 			\
-		/* '40 C' */																				\
-		0x34, 0x30, 0x43																	\
-		};
+const unsigned char RF430_DEFAULT_DATA[] = {                            \
+    /* NDEF Tag Application Name */                                     \
+    0xD2, 0x76, 0x00, 0x00, 0x85, 0x01, 0x01,                           \
+                                                                        \
+    /* Capability Container ID */                                       \
+    0xE1, 0x03,                                                         \
+    0x00  0x0F, /* CCLEN */                                             \
+    0x20,       /* Mapping version 2.0 */                               \
+    0x00, 0x3B, /* MLe (49 bytes); Maximum R-APDU data size */          \
+    0x00, 0x34, /* MLc (52 bytes); Maximum C-APDU data size */          \
+    0x04,       /* Tag, File Control TLV (4 = NDEF file) */             \
+    0x06,       /* Length, File Control TLV (6 = 6 bytes of datag) */   \
+    0xE1, 0x04, /* File Identifier */                                   \
+    0x0B, 0xDF, /* Max NDEF size (3037 bytes of useable memory) */      \
+    0x00,       /* NDEF file read access condition, no security */      \
+    0x00,       /* NDEF file write access condition, no security */     \
+                                                                        \
+    /* NDEF File ID */                                                  \
+    0xE1, 0x04,                                                         \
+                                                                        \
+    /* NDEF File for Hello World  (48 bytes total length) */            \
+    0x00, 0x2A, /* 0x39 NLEN; NDEF length (3 byte long message) */      \
+    0xD1, 0x01, 0x26,  /* Last byte has to be changed to NLEN - 4 */    \
+    0x54, /* T = text */                                                \
+    0x02,                                                               \
+    0x65, 0x6E, /* 'e', 'n', */                                         \
+                                                                        \
+    /* '80' */                                                          \
+    0x38, 0x30                                                          \
+};
 
 extern unsigned char FRAM_Message[256]; // FRAM container for holding the NDEF Message
 unsigned char read_data[100];
@@ -121,7 +114,7 @@ void main (void)
 	/* check if content is valid and set to default data if it is not */
 	if(FRAM_Message[0] != 0xD2)
 	{
-		memcpy(FRAM_Message, RF430_DEFAULT_DATA , 68);
+		memcpy(FRAM_Message, RF430_DEFAULT_DATA , 37);
 	}
 
     while (1)
