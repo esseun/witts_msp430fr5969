@@ -42,7 +42,7 @@ const unsigned char RF430_DEFAULT_DATA[] = {                            \
                                                                         \
     /* Capability Container ID */                                       \
     0xE1, 0x03,                                                         \
-    0x00  0x0F, /* CCLEN */                                             \
+    0x00, 0x0F, /* CCLEN */                                             \
     0x20,       /* Mapping version 2.0 */                               \
     0x00, 0x3B, /* MLe (49 bytes); Maximum R-APDU data size */          \
     0x00, 0x34, /* MLc (52 bytes); Maximum C-APDU data size */          \
@@ -56,13 +56,15 @@ const unsigned char RF430_DEFAULT_DATA[] = {                            \
     /* NDEF File ID */                                                  \
     0xE1, 0x04,                                                         \
                                                                         \
-    /* NDEF File for Hello World  (48 bytes total length) */            \
+    /* NDEF File for WiTTS */								            \
     0x00, 0x2A, /* 0x39 NLEN; NDEF length (3 byte long message) */      \
     0xD1, 0x01, 0x26,  /* Last byte has to be changed to NLEN - 4 */    \
     0x54, /* T = text */                                                \
     0x02,                                                               \
     0x65, 0x6E, /* 'e', 'n', */                                         \
                                                                         \
+    /* patientId: 123456789 */                                          \
+	0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x20,         \
     /* '80' */                                                          \
     0x38, 0x30                                                          \
 };
@@ -114,7 +116,7 @@ void main (void)
 	/* check if content is valid and set to default data if it is not */
 	if(FRAM_Message[0] != 0xD2)
 	{
-		memcpy(FRAM_Message, RF430_DEFAULT_DATA , 37);
+		memcpy(FRAM_Message, RF430_DEFAULT_DATA , 47);
 	}
 
     while (1)

@@ -53,7 +53,7 @@ void update_rf430(void)
 {
 	rf430_i2c_init();
 
-	decToAscii(&FRAM_Message[34], t_Fahrenheit);
+	decToAscii(&FRAM_Message[44], t_Fahrenheit);
     /* Modify RF430_DEFAULT_DATA[] to include celcius reading */
 	/* decToAscii(&FRAM_Message[64], t_Celcius); */
 
